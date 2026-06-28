@@ -1,0 +1,16 @@
+# User Profile backups (ignores profile downloads)
+*.json
+!vercel.json
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE settings
+.vscode/
+.idea/
+
+# Dependencies
+node_modules/
+package-lock.json

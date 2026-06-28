@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SharkDB - Scientific Shark Database & Bio-Agent</title>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Style Sheet -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Chart.js CDN for Interactive Graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+
+  <!-- ==================== MAIN WEB APPLICATION CONTAINER ==================== -->
+  <div id="app-container" class="app-container">
+    
+    <!-- SIDEBAR NAVIGATION (Desktop) -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo-container">
+          <div class="logo"><i class="fas fa-fish-fins"></i> SharkDB</div>
+        </div>
+        <ul class="nav-links">
+          <li id="nav-dashboard" class="active"><a href="#dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+          <li id="nav-explore"><a href="#explore"><i class="fas fa-compass"></i> Explore Species</a></li>
+          <li id="nav-chat"><a href="#chat"><i class="fas fa-comments"></i> SharkDB Chat</a></li>
+          <li id="nav-favorites"><a href="#favorites"><i class="fas fa-star"></i> Bookmarks</a></li>
+          <li id="nav-stats"><a href="#stats"><i class="fas fa-chart-column"></i> Analytics</a></li>
+          <li id="nav-docs"><a href="#docs"><i class="fas fa-book"></i> Documentation</a></li>
+        </ul>
+      </div>
+
+      <!-- User Session Box -->
+      <div class="user-profile-box" style="display:flex; flex-direction:column; gap:8px;">
+        <div class="user-info">
+          <div class="user-name" id="sidebar-username">Guest Researcher</div>
+          <div class="user-email" id="sidebar-email">guest@sharkdb.com</div>
+        </div>
+        <div class="desktop-credit" style="font-size:0.7rem; color:var(--text-muted); border-top:1px solid var(--border); padding-top:8px; text-align:center; width:100%;">
+          Designed & Developed by <br><strong style="color:var(--text-white);">Gabrieala Mandal</strong>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN PANEL CONTENT AREA -->
+    <main class="main-content">
+      
+      <!-- Top Header Bar -->
+      <header class="header-bar">
+        <div class="page-title" id="header-page-title">Dashboard</div>
+        
+        <!-- Interactive API status indicator -->
+        <div class="api-status-indicator" id="api-indicator" title="Configure AI Pipeline Settings">
+          <div class="status-dot"></div>
+          <span>Offline Local AI Active</span>
+        </div>
+      </header>
+
+      <!-- ==================== VIEW: DASHBOARD ==================== -->
+      <section id="view-dashboard" class="view-section active">
+        <!-- Welcoming & Discovery Banner -->
+        <div class="welcome-banner">
+          <div class="welcome-text">
+            <h2>Welcome to the SharkDB Scientific Terminal</h2>
+            <p>Our oceans house **over 500+ known species of sharks**, ranging from tiny lanternsharks to the massive whale shark. Oceanographic expeditions regularly discover new species, especially in the deep sea. SharkDB provides tools to explore all cataloged species and consult our RAG agent to analyze their ecology.</p>
+            <button class="btn-primary" id="btn-cast-net-dashboard" style="margin-top:15px; width:auto; background:linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);"><i class="fas fa-anchor"></i> Cast the Net (Random Species)</button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Featured Card -->
+          <div class="feature-card" id="sod-container">
+            <!-- Dynamic Sod content goes here -->
+          </div>
+
+          <!-- Quick Statistics & Database Banners -->
+          <div class="feature-card" style="justify-content: flex-start; gap: 15px;">
+            <h3><i class="fas fa-chart-line" style="color:var(--primary);"></i> Scientific Data Integrity</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.5;">
+              Our verified profiles are compiled from Wikipedia, the Shark Research Institute, and WWF. For species not pre-loaded locally, SharkDB triggers **real-time Wikipedia API queries** to retrieve summaries instantly.
+            </p>
+            
+            <div class="quick-stats-row" id="dashboard-stats-grid">
+              <!-- Dynamic count statistics -->
+            </div>
+            
+            <div id="recommended-showcase" style="margin-top: 15px;">
+              <!-- Dynamic bookmarks / recommendations list -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Future Discoveries Information Alert Box -->
+        <div style="background: rgba(13, 27, 50, 0.4); border: 1px solid rgba(0, 242, 254, 0.1); border-radius: 16px; padding: 20px; box-shadow: var(--shadow);">
+          <h4 style="color: var(--primary); font-size: 1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-circle-info"></i> The Uncharted Ocean & Future Discoveries
+          </h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted);">
+            Marine biologists estimate that hundreds of deep-sea shark species remain unclassified. In the last decade alone, discoveries like the Ninja Lanternshark (*Etmopterus benchleyi*) have shown how little we know about deep ocean layers. SharkDB supports expanding its library dynamically via internet searches to catalog these newly discovered species as research advances.
+          </p>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: EXPLORE ==================== -->
+      <section id="view-explore" class="view-section">
+        <!-- Scalability Header Message -->
+        <div style="background: rgba(0, 242, 254, 0.03); border-radius: 12px; border: 1px solid var(--border); padding: 12px 18px; margin-bottom: 20px; font-size: 0.85rem; color: var(--text-light); line-height: 1.4;">
+          <i class="fas fa-magnifying-glass" style="color: var(--primary);"></i> Just type any shark species name in the search bar below (e.g. <em>"Epaulette shark"</em>, <em>"Goblin shark"</em>, <em>"Ninja lanternshark"</em>). If it's not pre-loaded locally, SharkDB will automatically search Wikipedia and insert the complete biological profile into your catalog.
+        </div>
+
+        <!-- Advanced Filters -->
+        <div class="filter-row">
+          <div class="search-input-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="explore-search" placeholder="Type shark species name to search or add dynamically (e.g. 'Goblin shark')...">
+            <i class="fas fa-spinner fa-spin search-spinner" id="explore-search-spinner"></i>
+          </div>
+          
+          <select id="filter-threat" class="select-filter">
+            <option value="">All Threat Levels</option>
+            <option value="High">High Threat</option>
+            <option value="Medium">Medium Threat</option>
+            <option value="Low">Low/No Threat</option>
+          </select>
+          
+          <select id="filter-status" class="select-filter">
+            <option value="">All Conservation Statuses</option>
+            <option value="Critically Endangered">Critically Endangered</option>
+            <option value="Endangered">Endangered</option>
+            <option value="Vulnerable">Vulnerable</option>
+            <option value="Near Threatened">Near Threatened</option>
+            <option value="Least Concern">Least Concern</option>
+          </select>
+          <button class="select-filter" id="btn-cast-net-explore" style="background:linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%); color:var(--text-white); border:none;"><i class="fas fa-anchor"></i> Cast the Net</button>
+        </div>
+        
+        <!-- Search Warning container -->
+        <div id="search-warning" style="display:none; color:var(--status-endangered); font-size:0.8rem; margin-top:-10px; margin-bottom:15px; background:rgba(239, 68, 68, 0.1); border:1px solid rgba(239, 68, 68, 0.2); padding:10px 15px; border-radius:8px; align-items:center; gap:8px;">
+          <i class="fas fa-exclamation-triangle"></i> Out of scope: Only members of the Selachimorpha (sharks) class can be cataloged.
+        </div>
+
+        <!-- Grid layout -->
+        <div class="shark-grid" id="explore-grid">
+          <!-- Dynamic Shark cards go here -->
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: SHARKDB CHAT ==================== -->
+      <section id="view-chat" class="view-section" style="padding: 0;">
+        <div class="chat-container">
+          <!-- Chat messages box -->
+          <div class="chat-messages" id="chat-messages-container">
+            <!-- Chat history renders here -->
+          </div>
+
+          <!-- Suggested prompts bar -->
+          <div class="suggested-prompts-container">
+            <button class="prompt-pill">"Which sharks are dangerous to humans?"</button>
+            <button class="prompt-pill">"Compare the Great White and Tiger Shark"</button>
+            <button class="prompt-pill">"What is the fastest shark in the ocean?"</button>
+            <button class="prompt-pill">"Tell me about the Goblin Shark"</button>
+          </div>
+
+          <!-- Input Controls -->
+          <div class="chat-input-bar">
+            <button class="prompt-pill" id="btn-clear-history" style="border-radius: 12px; height: 50px; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2); color: #fca5a5;" title="Clear Chat History">
+              <i class="fas fa-trash-can"></i> Clear History
+            </button>
+            <div class="chat-input-container">
+              <input type="text" id="chat-message-input" placeholder="Ask SharkDB a question... (e.g. 'Compare Greenland and Sleeper shark size')">
+            </div>
+            <button class="btn-send" id="btn-chat-send">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: FAVORITES ==================== -->
+      <section id="view-favorites" class="view-section">
+        <div id="favorites-empty-state" style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+          <i class="far fa-star" style="font-size: 3rem; margin-bottom: 15px; color: var(--border);"></i>
+          <h3>No bookmarked species yet</h3>
+          <p style="margin-top: 8px;">Explore species in our library and click the star icon to add them to your bookmarks.</p>
+          <button class="btn-primary" style="width: auto; margin-top: 20px; padding: 10px 20px;" onclick="window.location.hash='#explore'">Explore Species</button>
+        </div>
+        <div class="shark-grid" id="favorites-grid">
+          <!-- Favorited shark cards go here -->
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: STATISTICS ==================== -->
+      <section id="view-stats" class="view-section">
+        <div class="charts-grid">
+          <!-- Speed comparison -->
+          <div class="chart-card">
+            <h3>Maximum Speed Comparison (km/h)</h3>
+            <div class="chart-container-inner">
+              <canvas id="chart-speed"></canvas>
+            </div>
+          </div>
+
+          <!-- Size comparison -->
+          <div class="chart-card">
+            <h3>Maximum Length Comparison (meters)</h3>
+            <div class="chart-container-inner">
+              <canvas id="chart-size"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conservation Doughnut chart -->
+        <div class="charts-grid" style="grid-template-columns: 1fr;">
+          <div class="chart-card" style="height: 400px;">
+            <h3>IUCN Red List Conservation Distribution</h3>
+            <div class="chart-container-inner">
+              <canvas id="chart-conservation"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: DOCUMENTATION ==================== -->
+      <section id="view-docs" class="view-section">
+        <div class="docs-content">
+          <h2>SharkDB AI Architecture & Pipeline</h2>
+          <p>This web application showcases a client-side **Retrieval-Augmented Generation (RAG)** pipeline designed to explore shark biology without hallucinations or factual errors.</p>
+          
+          <h3>1. Structured Ground Truth Database</h3>
+          <p>Instead of letting the language model hallucinate statistics and parameters, we define a structured local database in <code>js/database.js</code>. This database holds verified scientific parameters (average and maximum length, maximum weight, speed, habitats, threat levels, conservation status, behaviors, and diets) sourced from:</p>
+          <ul>
+            <li><strong>Wikipedia</strong>: Common names, scientific classifications, general descriptions, and behavioral contexts.</li>
+            <li><strong>Shark Research Institute (SRI)</strong>: Detailed physiological dimensions, speed benchmarks, and records on human safety levels.</li>
+            <li><strong>World Wildlife Fund (WWF)</strong>: Accurate conservation status indicators (Endangered, Vulnerable, CITES status) and habitat preservation contexts.</li>
+          </ul>
+
+          <h3>2. Wikipedia API Scalability (500+ Species)</h3>
+          <p>To support all 500+ known species of sharks, SharkDB incorporates a **Wikipedia Real-Time Retrieval Module**. When you search or ask about a non-cataloged species (e.g. <em>"Epaulette shark"</em>):</p>
+          <ol>
+            <li>The system queries the Wikipedia Search API to locate the exact taxonomic title.</li>
+            <li>It retrieves the page summary, scientific binomial names, thumbnail image, and main paragraphs in real time.</li>
+            <li>It dynamically constructs a formatted SharkDB record containing estimated sizes, velocities, habitats, and safety parameters.</li>
+            <li>This dynamic context is then injected directly into the active RAG engine (local template or Gemini model).</li>
+          </ol>
+
+          <h3>3. RAG & Semantic Search (TF-IDF)</h3>
+          <p>Upon initial application load, the system builds an index using the Term Frequency-Inverse Document Frequency (TF-IDF) formula across all species profiles:</p>
+          <pre><code>TF(t, d) = (Number of times term t appears in document d) / (Total terms in d)
+IDF(t) = log(1 + Total Documents / Documents containing term t)
+TF-IDF Weight = TF * IDF</code></pre>
+          <p>When you ask a question in the chatbot interface, the system tokenizes the query, eliminates standard grammatical stopwords, computes the cosine similarity vector, and retrieves the top 3 most semantically matching shark records as "Context Records".</p>
+
+          <h3>4. Flexible AI Reasoning Modes</h3>
+          <ul>
+            <li><strong>Gemini 2.5 Flash RAG (API Key Mode)</strong>: If a Google Gemini API Key is entered, the app makes an HTTPS request to the official Gemini API. The prompt is wrapped with strict instructions forcing the model to rely <em>only</em> on the retrieved database records for context, citing sources, and responding with <code>"I'm sorry, but that information is not available..."</code> if it goes outside the bounds of the database.</li>
+            <li><strong>Local Expert Engine (Offline Mode)</strong>: If no API key is provided, the client-side system acts as a highly structured local NLP engine. It parses common query intents (comparisons, danger metrics, speeds, sizes, species checks) using regex parameters, references the matching database records directly, and formats structured responses (like side-by-side markdown comparison tables) with zero lag and zero hallucination.</li>
+          </ul>
+
+          <h3>5. Profile Portability (JSON Backups)</h3>
+          <p>To keep the application deployable as a static asset without database backend costs, SharkDB runs localized user sessions in the browser. To allow portability, we implement a **JSON Backup/Restore tool**. Users can download a JSON backup of their account profile, bookmarks, and chat logs, and upload it on any other deployed device to sync their session.</p>
+        </div>
+      </section>
+
+      <!-- Layout Footer -->
+      <footer style="margin-top: 40px; padding: 25px 0; text-align: center; border-top: 1px dashed var(--border); width: 100%;">
+        <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+          Designed & Developed by <strong style="color: var(--primary);">Gabrieala Mandal</strong> | &copy; 2026 SharkDB Marine Biology Registry
+        </p>
+      </footer>
+
+    </main>
+
+    <!-- MOBILE NAVIGATION BOTTOM BAR -->
+    <nav class="mobile-nav">
+      <a href="#dashboard" id="mnav-dashboard" class="active"><i class="fas fa-chart-pie"></i><span>Home</span></a>
+      <a href="#explore" id="mnav-explore"><i class="fas fa-compass"></i><span>Explore</span></a>
+      <a href="#chat" id="mnav-chat"><i class="fas fa-comments"></i><span>Chat</span></a>
+      <a href="#favorites" id="mnav-favorites"><i class="fas fa-star"></i><span>Saved</span></a>
+      <a href="#stats" id="mnav-stats"><i class="fas fa-chart-column"></i><span>Stats</span></a>
+      <a href="#docs" id="mnav-docs"><i class="fas fa-book"></i><span>Docs</span></a>
+    </nav>
+
+  </div>
+
+
+  <!-- ==================== DETAILED BIOLOGICAL PROFILE MODAL ==================== -->
+  <div id="detail-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+      
+      <div class="modal-header">
+        <h2 id="modal-title">Great White Shark <span style="font-size: 1rem; color: var(--text-muted);">Carcharodon carcharias</span></h2>
+      </div>
+
+      <!-- Stat Boxes Grid -->
+      <div class="modal-grid-stats">
+        <div class="modal-stat-box">
+          <div class="modal-stat-label">Max Length</div>
+          <div class="modal-stat-value" id="modal-stat-size">6.1 m</div>
+        </div>
+        <div class="modal-stat-box">
+          <div class="modal-stat-label">Max Weight</div>
+          <div class="modal-stat-value" id="modal-stat-weight">2,268 kg</div>
+        </div>
+        <div class="modal-stat-box">
+          <div class="modal-stat-label">Top Velocity</div>
+          <div class="modal-stat-value" id="modal-stat-speed">40 km/h</div>
+        </div>
+        <div class="modal-stat-box">
+          <div class="modal-stat-label">Depth Range</div>
+          <div class="modal-stat-value" id="modal-stat-depth">0 - 1200m</div>
+        </div>
+      </div>
+
+      <!-- Detailed Info Blocks -->
+      <div class="modal-body-section">
+        <h4>General Description</h4>
+        <p id="modal-desc"></p>
+      </div>
+
+      <div class="modal-body-section">
+        <h4>Behavior & Ecology</h4>
+        <p id="modal-behavior"></p>
+      </div>
+
+      <div class="modal-body-section">
+        <h4>Feeding & Habitat</h4>
+        <div id="modal-diet-habitat"></div>
+      </div>
+
+      <div class="modal-body-section">
+        <h4>Human Safety Profile</h4>
+        <div id="modal-safety"></div>
+      </div>
+
+      <div class="modal-body-section">
+        <h4>Conservation Status (IUCN)</h4>
+        <div id="modal-conservation"></div>
+      </div>
+
+      <div class="modal-body-section" style="background: rgba(0, 242, 254, 0.05); padding: 15px; border-radius: 12px; border: 1px solid var(--border);">
+        <h4 style="border-bottom: none; color: var(--primary); margin-bottom: 4px;">Fascinating Fact</h4>
+        <p id="modal-fact" style="font-style: italic;"></p>
+      </div>
+
+      <div class="modal-body-section" style="margin-top: 20px;">
+        <h4 style="font-size: 0.8rem;">Data Sources & Citations</h4>
+        <div id="modal-sources" style="font-size: 0.8rem; color: var(--text-muted);"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== GLOBAL CONFIGURATION MODAL ==================== -->
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 500px;">
+      <button class="modal-close" id="settings-close"><i class="fas fa-times"></i></button>
+      <div class="modal-header">
+        <h2>AI Pipeline & Profile Settings</h2>
+      </div>
+      <form id="settings-form" class="settings-form">
+        <p>By default, SharkDB runs on an offline local rules-engine to answer comparative, speed, size, and danger questions based on our database.</p>
+        <p>To enable live generative answers using **Gemini 2.5 Flash** constrained to our database (RAG), enter your Google Gemini API Key below.</p>
+        
+        <div class="form-group">
+          <label for="api-key-input">Gemini API Key</label>
+          <input type="password" id="api-key-input" placeholder="AIzaSy...">
+        </div>
+        
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+          <button type="submit" class="btn-primary" style="margin-top: 0; width: auto; padding: 12px 24px;">Save AI Configuration</button>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Leave empty to use Offline Mode</span>
+        </div>
+      </form>
+
+      <!-- Profile Backup / Portability Section -->
+      <div style="border-top: 1px dashed var(--border); margin-top: 20px; padding-top: 20px;">
+        <h4 style="color:var(--text-white); font-size: 0.95rem; margin-bottom: 8px;">Researcher Data Portability</h4>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.4;">
+          Since SharkDB runs client-side for zero-cost deployment, you can download a backup of your bookmarks and chat logs, or restore it on any other deployed device.
+        </p>
+        <div style="display: flex; gap: 10px;">
+          <button id="btn-export-profile" class="prompt-pill" style="flex-grow: 1; text-align: center;"><i class="fas fa-download"></i> Backup Research Data</button>
+          <button id="btn-import-trigger" class="prompt-pill" style="flex-grow: 1; text-align: center;"><i class="fas fa-file-import"></i> Restore Backup</button>
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <button id="btn-reset-database" class="prompt-pill" style="flex-grow: 1; text-align: center; border-color: rgba(239, 68, 68, 0.25); color: #fca5a5; background: rgba(239, 68, 68, 0.12);"><i class="fas fa-trash-arrow-up"></i> Restore Database Defaults</button>
+        </div>
+        <input type="file" id="profile-import-file" style="display:none;" accept=".json">
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== WEB APP INITIALIZATION SCRIPTS ==================== -->
+  <script src="js/database.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Initialize application
+    document.addEventListener("DOMContentLoaded", () => {
+      window.SharkApp.init();
+    });
+  </script>
+</body>
+</html>
